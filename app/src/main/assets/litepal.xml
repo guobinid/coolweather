@@ -2,7 +2,7 @@
     <dbname value="cool_weather"></dbname>
     <version value="1"></version>
     <list>
-        <mapping class="com.android.db.province" />
+        <mapping class="com.android.db.Province" />
         <mapping class="com.android.db.City" />
         <mapping class="com.android.db.County" />
     </list>

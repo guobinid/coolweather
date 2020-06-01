@@ -2,10 +2,10 @@ package com.android.db;
 
 import org.litepal.crud.LitePalSupport;
 
-public class province extends LitePalSupport {
+public class Province extends LitePalSupport {
     private int id;
     private String provinceName;//记录省名字
-    private String provinceCode;//记录省代号
+    private int provinceCode;//记录省代号
 
     public int getId() {
         return id;
@@ -15,7 +15,7 @@ public class province extends LitePalSupport {
         return provinceName;
     }
 
-    public String getProvinceCode() {
+    public int getProvinceCode() {
         return provinceCode;
     }
 
@@ -27,7 +27,7 @@ public class province extends LitePalSupport {
         this.provinceName = provinceName;
     }
 
-    public void setProvinceCode(String provinceCode) {
+    public void setProvinceCode(int provinceCode) {
         this.provinceCode = provinceCode;
     }
 }
