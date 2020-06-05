@@ -1,6 +1,7 @@
 package com.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -97,6 +98,13 @@ public class ChooseAreaFragment extends Fragment {
                     selectCity = cityList.get(position);
                     //查询所有县级数据
                     queryCounties();
+                }else if(currenLevel == LEVEL_COUNTY){
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Log.d("mmm","weatherId--->" + weatherId);
+                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -104,6 +112,7 @@ public class ChooseAreaFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("mmm","currenLevel" + currenLevel);
                 if(currenLevel == LEVEL_COUNTY){
                     //返回上一级，查询市级所有数据
                     queryCitites();
@@ -112,9 +121,9 @@ public class ChooseAreaFragment extends Fragment {
                     queryProvince();
                 }
                 //都不是，默认查询省级数据
-                queryProvince();
             }
         });
+        queryProvince();
     }
     //查询所有的省级数据，如果查不到就从网络上获取
     private void queryProvince(){
@@ -140,7 +149,7 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCitites(){
         titleText.setText(selectProvince.getProvinceName());
         backButton.setVisibility(View.VISIBLE);
-        cityList = LitePal.where("province = ?",String.valueOf(selectProvince.getId())).find(City.class);
+        cityList = LitePal.where("provinceid = ?",String.valueOf(selectProvince.getId())).find(City.class);
         if(cityList.size() > 0){
             dataList.clear();
             for(City city : cityList){
@@ -159,7 +168,7 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCounties(){
         titleText.setText(selectCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
-        countyList = LitePal.where("cityId = ?",String.valueOf(selectCity.getId())).find(County.class);
+        countyList = LitePal.where("cityid = ?",String.valueOf(selectCity.getId())).find(County.class);
         if(countyList.size() > 0){
             dataList.clear();
             for(County county : countyList){
